@@ -1,6 +1,7 @@
 const template = document.createElement('template');
 template.innerHTML = `
 <link rel="stylesheet"  href="css/style.css" >
+<link rel="stylesheet" href="css/font-awesome.css">
 <div class="content">
 <ul id="list" ref="list">
    
@@ -52,9 +53,19 @@ class List extends HTMLElement {
         const elementJob = element.attributes.job.value;
       
         if(elementJob == "complete"){
-            this.completeToDo(element);
+
+          element.classList.toggle(CHECK);
+    
+          element.classList.toggle(UNCHECK);
+      
+          element.parentNode.querySelector(".text").classList.toggle(LINE_THROUGH);
+      
+          this.LIST[element.id].done = this.LIST[element.id].done ? false : true;
+      
         }else if(elementJob == "delete"){
-            this.removeToDO(element);
+             element.parentNode.parentNode.removeChild(element.parentNode);
+
+             this.LIST[element.id].trash = true;
          }
       
          localStorage.setItem("TODO", JSON.stringify(this.LIST));
